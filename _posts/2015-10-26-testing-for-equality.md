@@ -139,7 +139,7 @@ Usage of `EqualityOperatorOverloadAssertion`:
     <span class="p">}</span>
 </code></pre></div>
 
-I think that it doesn't make sense to put here implementation of every assertion. Therefore, I decided to pick one simple assertion and explain how it is done. If you are interested how other assertions are implemented, please take a look [here](https://github.com/baks/EqualityTests/tree/master/EqualityTests).
+I think that it doesn't make sense to put here implementation of every assertion. Therefore, I decided to pick one simple assertion and explain how it is done. If you are interested how other assertions are implemented, please take a look [here](https://github.com/baks/EqualityTests/tree/master/EqualityTests/Assertions).
 
 #### Compose all the assertions
 
