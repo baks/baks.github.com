@@ -110,33 +110,33 @@ For clarification, the assertions that will be presented are intended to use wit
 Goal of the `EqualityOperatorOverloadAssertion` is to check whether given type overloads `==` operator. Assertion derives from [IdiomaticAssertion](https://github.com/AutoFixture/AutoFixture/blob/master/Src/Idioms/IIdiomaticAssertion.cs) abstract class that is defined in `AutoFixture.Idioms`. `IdiomaticAssertion` provides helpful default implementation for methods from [IIdiomaticAssertion](https://github.com/AutoFixture/AutoFixture/blob/master/Src/Idioms/IIdiomaticAssertion.cs) interface. In our example we are overriding `Verify` method with `Type` parameter as this is the information necessary to perform interesting us assertion. After it turns out that type does not overload `==` operator, we throw meaningful exception which explains what is wrong.
 This is the code for `EqualityOperatorOverloadAssertion`:
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp">    <span class="k">public</span> <span class="k">class</span> <span class="nc">EqualityOperatorOverloadAssertion</span> <span class="p">:</span> <span class="nc">IdiomaticAssertion</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Verify</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nc">ArgumentNullException</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">);</span>
-            <span class="p">}</span>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">EqualityOperatorOverloadAssertion</span> <span class="p">:</span> <span class="nc">IdiomaticAssertion</span>
+<span class="p">{</span>
+	<span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Verify</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nc">ArgumentNullException</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">);</span>
+		<span class="p">}</span>
 
-            <span class="k">var</span> <span class="n">equalityOperatorOverload</span> <span class="p">=</span> <span class="n">type</span><span class="p">.</span><span class="n">GetEqualityOperatorMethod</span><span class="p">();</span>
+		<span class="k">var</span> <span class="n">equalityOperatorOverload</span> <span class="p">=</span> <span class="n">type</span><span class="p">.</span><span class="n">GetEqualityOperatorMethod</span><span class="p">();</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">equalityOperatorOverload</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nc">EqualityOperatorException</span><span class="p">(</span>
-                    <span class="k">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Expected type {0} to overload == operator with parameters of type {0}&quot;</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">Name</span><span class="p">));</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">equalityOperatorOverload</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nc">EqualityOperatorException</span><span class="p">(</span>
+				<span class="k">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Expected type {0} to overload == operator with parameters of type {0}&quot;</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">Name</span><span class="p">));</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 Usage of `EqualityOperatorOverloadAssertion`:
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">    [Fact]</span>
-    <span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldOverloadEqualityOperator</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">new</span> <span class="nc">EqualityOperatorOverload</span><span class="p">().</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nc">SomeValueObject</span><span class="p">));</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">[Fact]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldOverloadEqualityOperator</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="k">new</span> <span class="nc">EqualityOperatorOverload</span><span class="p">().</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nc">SomeValueObject</span><span class="p">));</span>
+<span class="p">}</span>
 </code></pre></div>
 
 I think that it doesn't make sense to put here implementation of every assertion. Therefore, I decided to pick one simple assertion and explain how it is done. If you are interested how other assertions are implemented, please take a look [here](https://github.com/baks/EqualityTests/tree/master/EqualityTests/Assertions).
@@ -145,77 +145,77 @@ I think that it doesn't make sense to put here implementation of every assertion
 
 To write a reusable component that will execute test cases from our test-do list we need to compose all created assertions. We can use `CompositeIdiomaticAssertion` class from `AutoFixture.Idioms` that allows to supply suite of assertions that will be verified.
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp">    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Assert</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">var</span> <span class="n">fixture</span> <span class="p">=</span> <span class="k">new</span> <span class="nc">Fixture</span><span class="p">();</span>
-            <span class="k">var</span> <span class="n">compositeAssertion</span> <span class="p">=</span>
-                <span class="k">new</span> <span class="nc">CompositeIdiomaticAssertion</span><span class="p">(</span><span class="n">EqualityAssertions</span><span class="p">(</span><span class="n">fixture</span><span class="p">,</span> <span class="k">new</span> <span class="nc">EqualityTestCaseProvider</span><span class="p">(</span><span class="n">fixture</span><span class="p">)));</span>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
+<span class="p">{</span>
+	<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Assert</span><span class="p">()</span>
+	<span class="p">{</span>
+		<span class="k">var</span> <span class="n">fixture</span> <span class="p">=</span> <span class="k">new</span> <span class="nc">Fixture</span><span class="p">();</span>
+		<span class="k">var</span> <span class="n">compositeAssertion</span> <span class="p">=</span>
+			<span class="k">new</span> <span class="nc">CompositeIdiomaticAssertion</span><span class="p">(</span><span class="n">EqualityAssertions</span><span class="p">(</span><span class="n">fixture</span><span class="p">,</span> <span class="k">new</span> <span class="nc">EqualityTestCaseProvider</span><span class="p">(</span><span class="n">fixture</span><span class="p">)));</span>
 
-            <span class="n">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">compositeAssertion</span><span class="p">);</span>
-        <span class="p">}</span>
+		<span class="n">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">compositeAssertion</span><span class="p">);</span>
+	<span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Assert</span><span class="p">(</span><span class="n">Func</span><span class="p">&lt;</span><span class="nc">EqualityTestsConfiguration</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;</span> <span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">var</span> <span class="n">compositeAssertion</span> <span class="p">=</span>
-                <span class="k">new</span> <span class="nc">CompositeIdiomaticAssertion</span><span class="p">(</span><span class="n">EqualityAssertions</span><span class="p">(</span><span class="k">new</span> <span class="nc">Fixture</span><span class="p">(),</span> <span class="n">configuration</span><span class="p">()));</span>
+	<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Assert</span><span class="p">(</span><span class="n">Func</span><span class="p">&lt;</span><span class="nc">EqualityTestsConfiguration</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;</span> <span class="n">configuration</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">var</span> <span class="n">compositeAssertion</span> <span class="p">=</span>
+			<span class="k">new</span> <span class="nc">CompositeIdiomaticAssertion</span><span class="p">(</span><span class="n">EqualityAssertions</span><span class="p">(</span><span class="k">new</span> <span class="nc">Fixture</span><span class="p">(),</span> <span class="n">configuration</span><span class="p">()));</span>
 
-            <span class="n">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">compositeAssertion</span><span class="p">);</span>
-        <span class="p">}</span>
+		<span class="n">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">compositeAssertion</span><span class="p">);</span>
+	<span class="p">}</span>
 
-        <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">CompositeIdiomaticAssertion</span> <span class="n">compositeAssertion</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
-            <span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">).</span><span class="n">GetEqualsMethod</span><span class="p">());</span>
-            <span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">).</span><span class="n">GetMethod</span><span class="p">(</span><span class="s">&quot;GetHashCode&quot;</span><span class="p">));</span>
-        <span class="p">}</span>
+	<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">VerifyCompositeAssertion</span><span class="p">(</span><span class="n">CompositeIdiomaticAssertion</span> <span class="n">compositeAssertion</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
+		<span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">).</span><span class="n">GetEqualsMethod</span><span class="p">());</span>
+		<span class="n">compositeAssertion</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">).</span><span class="n">GetMethod</span><span class="p">(</span><span class="s">&quot;GetHashCode&quot;</span><span class="p">));</span>
+	<span class="p">}</span>
 
-        <span class="k">private</span> <span class="k">static</span> <span class="nc">IEnumerable</span><span class="p">&lt;</span><span class="nc">IdiomaticAssertion</span><span class="p">&gt;</span> <span class="n">EqualityAssertions</span><span class="p">(</span><span class="nc">ISpecimenBuilder</span> <span class="n">specimenBuilder</span><span class="p">,</span>
-            <span class="nc">IEqualityTestCaseProvider</span> <span class="n">equalityTestCaseProvider</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsOverrideAssertion</span><span class="p">();</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeOverrideAssertion</span><span class="p">();</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSelfAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSymmetricAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsTransitiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSuccessiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsNullAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeSuccessiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualityOperatorOverloadAssertion</span><span class="p">();</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">InequalityOperatorOverloadAssertion</span><span class="p">();</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualityOperatorValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">InequalityOperatorValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">IEquatableImplementedAssertion</span><span class="p">();</span>
-            <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">IEquatableValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+	<span class="k">private</span> <span class="k">static</span> <span class="nc">IEnumerable</span><span class="p">&lt;</span><span class="nc">IdiomaticAssertion</span><span class="p">&gt;</span> <span class="n">EqualityAssertions</span><span class="p">(</span><span class="nc">ISpecimenBuilder</span> <span class="n">specimenBuilder</span><span class="p">,</span>
+		<span class="nc">IEqualityTestCaseProvider</span> <span class="n">equalityTestCaseProvider</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsOverrideAssertion</span><span class="p">();</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeOverrideAssertion</span><span class="p">();</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSelfAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSymmetricAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsTransitiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsSuccessiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsNullAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualsValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">GetHashCodeSuccessiveAssertion</span><span class="p">(</span><span class="n">specimenBuilder</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualityOperatorOverloadAssertion</span><span class="p">();</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">InequalityOperatorOverloadAssertion</span><span class="p">();</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">EqualityOperatorValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">InequalityOperatorValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">IEquatableImplementedAssertion</span><span class="p">();</span>
+		<span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nc">IEquatableValueCheckAssertion</span><span class="p">(</span><span class="n">equalityTestCaseProvider</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 If our value object is using only primitive types in constructor, we can rely on default equality test case provider that can handle this situation. It means, that we can write simple unit test for equality like:
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">    [Fact]</span>
-    <span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldImplementValueEquality</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;.</span><span class="n">Assert</span><span class="p">();</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">[Fact]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldImplementValueEquality</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;.</span><span class="n">Assert</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 
 But, if we need some more advanced scenarios, we can provide our own instances to describe what the results of equality test cases should be:
 
-<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">        [Fact]</span>
-        <span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldImplementValueEquality</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;.</span><span class="n">Assert</span><span class="p">(</span>
-                <span class="p">()</span> <span class="p">=&gt;</span>
-                    <span class="nc">EqualityTestsConfigurer</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;</span>
-                    <span class="p">.</span><span class="n">Instance</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
-                        <span class="p">.</span><span class="n">ShouldBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
-                        <span class="p">.</span><span class="n">ShouldNotBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
-                        <span class="p">.</span><span class="n">ShouldNotBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">)));</span>
-        <span class="p">}</span>
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="nc">[Fact]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">ShouldImplementValueEquality</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="nc">EqualityTestsFor</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;.</span><span class="n">Assert</span><span class="p">(</span>
+		<span class="p">()</span> <span class="p">=&gt;</span>
+			<span class="nc">EqualityTestsConfigurer</span><span class="p">&lt;</span><span class="nc">Point</span><span class="p">&gt;</span>
+			<span class="p">.</span><span class="n">Instance</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+				<span class="p">.</span><span class="n">ShouldBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+				<span class="p">.</span><span class="n">ShouldNotBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
+				<span class="p">.</span><span class="n">ShouldNotBeEqualTo</span><span class="p">(</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">)));</span>
+<span class="p">}</span>
 </code></pre></div>
 
 #### Wrap up
