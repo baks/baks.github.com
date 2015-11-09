@@ -61,7 +61,7 @@ But, as you can see the syntax of creating dictionary mimics somewhat the patter
         <span class="p">{</span><span class="n">HintThree</span><span class="p">,</span> <span class="n">s</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nc">HintThreeProvider</span><span class="p">()},</span>
         <span class="p">{</span><span class="n">HintFour</span><span class="p">,</span> <span class="n">s</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nc">HintFourProvider</span><span class="p">()},</span>
         <span class="p">{</span><span class="nc">Match</span><span class="p">.</span><span class="n">Default</span><span class="p">,</span> <span class="n">s</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nc">NullHintProvider</span><span class="p">()</span> <span class="p">}</span>
-    <span class="p">}.</span><span class="n">Func</span><span class="p">(</span><span class="n">info</span><span class="p">).</span><span class="n">Single</span><span class="p">();</span>
+    <span class="p">}.</span><span class="n">Func</span><span class="p">(</span><span class="n">hint</span><span class="p">).</span><span class="n">Single</span><span class="p">();</span>
 </code></pre></div>
 
 Now, the code looks nice to me and it is more declarative than the original example. 
