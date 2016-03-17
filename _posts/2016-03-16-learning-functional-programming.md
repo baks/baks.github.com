@@ -20,6 +20,7 @@ It's not possible to write generic code that it will handle every cases, is it?.
 
 ### Another view at OO
 For a while let's back to Alan Kay (considered by some as father of object-oriented programming) famous sentence:
+
 > It's all about messaging.
 
 There is another view at object-oriented systems. Key is to focus on how objects communicate with each other. What messages they send? Object can receive message, takes parameters and send message to another object or return response. It's easy to understand when you take a look at `Smalltalk` language because there notion of sending messages is explicit. For me it's quite different view from that one focusing on the structure. I think it's better because it makes that we think in terms of objects. And then objects are not only holders for data. They play their own roles, they have their responsibilities. They must have their state encapsulated properly, because inproper messages can corrupt object. Proper naming becomes then much more important. Names of objects must reflect what role objects play and must reflect domain. Then it's easy to reason about it.
