@@ -50,6 +50,7 @@ The same, we can when we are composing our pipeline. However, there are some nua
 </code></pre>
 
 But I got an error 
+
 > The value or constructor inputList is not defined. 
 
 That actually makes sense if you know that `F#` uses indentation to mark scope boundaries.
