@@ -3,7 +3,7 @@ layout: post
 title: "Active patterns to improve user experience"
 description: ""
 category: 
-tags: []
+tags: [Functional programming, F#]
 ---
 {% include JB/setup %}
 
